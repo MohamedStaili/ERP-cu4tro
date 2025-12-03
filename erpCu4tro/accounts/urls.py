@@ -1,13 +1,12 @@
 from django.urls import include, path
 from rest_framework import routers
-from . import views
 #from rest_framework_simplejwt.views import (
 #    TokenObtainPairView,
 #    TokenRefreshView,
 #)
-from .views import LoginView, RefreshView, MeView, LoogoutView
+from .views import LoginView, RefreshView, MeView, LoogoutView, CreateUserViewSet
 router = routers.DefaultRouter()
-router.register(r"admins/users", views.CreateUserViewSet, basename="admin-user")
+router.register(r"admins/users", CreateUserViewSet, basename="admin-user")
 #router.register(r"groups", views.GroupViewSet)
 
 urlpatterns = [
