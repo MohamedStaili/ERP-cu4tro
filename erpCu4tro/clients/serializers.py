@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from .models import Client
+from .models import Client, ClientProduct
 
 User = get_user_model()
 
@@ -45,3 +45,18 @@ class ClientSerializer(serializers.ModelSerializer):
         )
 
         return client
+    
+
+class ClientProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ClientProduct
+        fields=['client', 'product', 'operator', 'quantity', 'created_at']
+        read_only_fields = ['created_at']
+
+    def validate_operator(self, value):
+        if value is None:
+            return value
+
+        if not value.groups.filter(name="Operator").exists():
+            raise serializers.ValidationError("L'utilisateur choisi n'est pas un operator.")
+        return value
