@@ -11,7 +11,7 @@ class CreateUserViewSet(viewsets.ModelViewSet):
     serializer_class= UserSerializer
     permission_classes = [IsAdmin]
     #pas de delete , faire desactiver le compte
-    http_method_names=['get', 'post', 'put', 'patch']
+    #http_method_names=['get', 'post', 'put', 'patch',]
 
     def perform_create(self, serializer):
         instance = serializer.save()

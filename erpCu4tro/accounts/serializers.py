@@ -2,10 +2,20 @@ from rest_framework import serializers
 from django.contrib.auth.models import User, Group
 
 class UserSerializer(serializers.ModelSerializer):
-    groups = serializers.StringRelatedField(many=True)
+    groups = serializers.SlugRelatedField(many=True,
+         slug_field="name",
+         queryset=Group.objects.all(),
+         required=False,
+         write_only= True,
+         )
+    groups_display = serializers.StringRelatedField(
+        source='groups',
+        many=True,
+        read_only=True
+    )
     class Meta:
         model = User
-        fields = ["id", "username", "email", "groups", "password", "first_name", "last_name", "is_active"]
+        fields = ["id", "username", "email", "groups","groups_display", "password", "first_name", "last_name", "is_active"]
         extra_kwargs = {
             "password": {"write_only": True},
         }
