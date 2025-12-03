@@ -18,7 +18,7 @@ class Client(models.Model):
 class ClientProduct(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
+    operator = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
     quantity = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     STATUS= [
